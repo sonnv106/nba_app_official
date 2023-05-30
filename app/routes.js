@@ -16,9 +16,7 @@ const AppStack = () => (
   inactiveColor="#3e2465"
   barStyle={{ backgroundColor: '#694fad',paddingBottom: 0 }}>
     <Tab.Screen component={News} name="News" options={{
-        tabBarIcon: ({color}) =>(
-            <View></View>
-        )
+        
     }}/>
     <Tab.Screen component={Games} name="Games" />
   </Tab.Navigator>
@@ -28,7 +26,7 @@ export default function () {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="App"
+        initialRouteName="Auth"
         screenOptions={{headerShown: false}}>
         <Stack.Screen component={AppStack} name="App" />
         <Stack.Screen component={SignIn} name="Auth" />
