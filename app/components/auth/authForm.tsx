@@ -1,7 +1,9 @@
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, StyleSheet, View, Button, Platform} from 'react-native';
 import React, {Component} from 'react';
 import Input from '../utils/forms/input';
-interface Props {}
+interface Props {
+    goNext: () => void;
+}
 interface States {
   type?: 'Login' | 'Register';
   action: string;
@@ -73,6 +75,15 @@ export default class authForm extends Component<Props, States> {
         <Text style={styles.errorLabel}>Oops, check your info</Text>
       </View>
     ) : null;
+  submitUser = () => {};
+  changeFormType = () =>{
+    const type = this.state.type;
+    this.setState( {
+        type: type === "Login" ? "Register" : "Login",
+        action: type === "Login" ? "Register" : "Login",
+        actionMode: type === "Login" ? "I want to login" : "I want to register"
+    })
+  }
   render() {
     return (
       <View>
@@ -95,6 +106,17 @@ export default class authForm extends Component<Props, States> {
         />
         {this.confirmPassword()}
         {this.formHasErrors()}
+        <View style={{marginTop: 20}}>
+          <View style={styles.button}>
+            <Button title={this.state.action} onPress={this.submitUser} />
+          </View>
+          <View style={styles.button}>
+            <Button title={this.state.actionMode} onPress={this.changeFormType} />
+          </View>
+          <View style={styles.button}>
+            <Button title={"I'll do it later"} onPress={() => this.props.goNext()} />
+          </View>
+        </View>
       </View>
     );
   }
@@ -112,4 +134,15 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     textAlign: 'center',
   },
+  button: {
+    ...Platform.select({
+        ios: {
+            marginBottom: 0,
+        },
+        android: {
+            marginBottom: 10,
+            marginTop: 10
+        }
+    })
+  }
 });

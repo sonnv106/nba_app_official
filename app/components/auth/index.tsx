@@ -2,8 +2,11 @@ import { View, Text, StyleSheet, ActivityIndicator, ScrollView} from 'react-nati
 import React, { useState } from 'react'
 import Logo from './authLogo'
 import AuthForm from './authForm'
-const AuthComponent = () => {
+const AuthComponent = ({props, navigation}: any) => {
   const [loading, setLoading] = useState<boolean>(false)
+  const goNext = () => {
+    navigation.navigate('App')
+  }
   if(loading){
     return(
       <View style={styles.loading}>
@@ -15,7 +18,7 @@ const AuthComponent = () => {
     <ScrollView style = {styles.container}>
       <View>
         <Logo/>
-        <AuthForm/>
+        <AuthForm goNext={goNext}/>
       </View>
     </ScrollView>
   )
