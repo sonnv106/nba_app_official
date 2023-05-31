@@ -1,6 +1,7 @@
 import {Text, StyleSheet, View, Button, Platform} from 'react-native';
 import React, {Component} from 'react';
 import Input from '../utils/forms/input';
+import validationRules from '../utils/forms/validationRules';
 interface Props {
     goNext: () => void;
 }
@@ -23,7 +24,7 @@ export default class authForm extends Component<Props, States> {
         valid: false,
         type: 'textinput',
         rules: {
-          required: true,
+          isRequired: true,
           isEmail: true,
         },
       },
@@ -32,7 +33,7 @@ export default class authForm extends Component<Props, States> {
         valid: false,
         type: 'textinput',
         rules: {
-          required: true,
+          isRequired: true,
           minLength: 6,
         },
       },
@@ -53,6 +54,9 @@ export default class authForm extends Component<Props, States> {
     let formCopy: any = this.state.form;
     formCopy[name].value = value;
 
+    let rules = formCopy[name].rules;
+    let valid  = validationRules(value, rules, formCopy)
+    formCopy[name].valid = valid
     this.setState({
       form: formCopy,
     });
