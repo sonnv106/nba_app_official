@@ -6,7 +6,17 @@ const validationRules = (value, rules, formCopy) =>{
                 valid = valid && validateRequired(value)
                 break;
             case 'isEmail': 
-                valid = valid && validateEmail(value)
+                valid = valid && validateEmail(value);
+                break;
+            case 'minLength': 
+                valid = valid && validateMinLength(value, rules[rule])
+                break;
+            case 'maxLength': 
+                valid = valid && validateMaxLength(value, rules[rule])
+                break;
+            case 'confirmPass': 
+                console.log('xxxxx', value, formCopy )
+                valid = valid && validateConfirmPass(value, formCopy[rules.confirmPass].value)
             default:
                 value = true
                 break;
@@ -24,5 +34,23 @@ const validateRequired = (value) =>{
 const validateEmail = email => {
     const expression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return expression.test(String(email).toLocaleLowerCase())
+}
+const validateMinLength = (value, ruleValue) => {
+    if(value >= ruleValue){
+        return true
+    }
+    return false
+}
+const validateMaxLength = (value, ruleValue) => {
+    if(value <= ruleValue){
+        return true
+    }
+    return false
+}
+const validateConfirmPass = (confirmPass, pass) => {
+    if(confirmPass === pass){
+        return true
+    }
+    return false
 }
 export default validationRules;

@@ -42,7 +42,7 @@ export default class authForm extends Component<Props, States> {
         valid: false,
         type: 'textinput',
         rules: {
-          confirmPass: true,
+          confirmPass: 'password',
         },
       },
     },
