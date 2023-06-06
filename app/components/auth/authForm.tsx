@@ -2,6 +2,10 @@ import {Text, StyleSheet, View, Button, Platform} from 'react-native';
 import React, {Component} from 'react';
 import Input from '../utils/forms/input';
 import validationRules from '../utils/forms/validationRules';
+
+import { connect } from 'react-redux';
+import {signIn, signUp} from '../../store/actions/user_actions';
+import { bindActionCreators } from 'redux';
 interface Props {
     goNext: () => void;
 }
@@ -12,7 +16,7 @@ interface States {
   hasErrors: boolean;
   form: any;
 }
-export default class authForm extends Component<Props, States> {
+class AuthForm extends Component<Props, States> {
   state: States = {
     type: 'Login',
     action: 'Login',
@@ -79,7 +83,37 @@ export default class authForm extends Component<Props, States> {
         <Text style={styles.errorLabel}>Oops, check your info</Text>
       </View>
     ) : null;
-  submitUser = () => {};
+  submitUser = () => {
+    let isFormValid = true;
+    let formToSubmit: any = {};
+    const formCopy = this.state.form;
+    for(let key in formCopy){
+      if(this.state.type == 'Login'){
+          //Login
+          if(key !== 'confirmPassword'){
+            isFormValid = isFormValid && formCopy[key].valid;
+            formToSubmit[key] = formCopy[key].value
+          }
+      }else{
+        //Register
+            isFormValid = isFormValid && formCopy[key].valid;
+            formToSubmit[key] = formCopy[key].value
+      }
+      
+    }
+    if(isFormValid){
+      if(this.state.type === 'Login'){
+        this.props.signIn(formToSubmit)
+      }else{
+        this.props.signUp(formToSubmit)
+      }
+    }else{
+      this.setState({
+        hasErrors: true
+      })
+    }
+
+  };
   changeFormType = () =>{
     const type = this.state.type;
     this.setState( {
@@ -126,6 +160,15 @@ export default class authForm extends Component<Props, States> {
   }
 }
 
+function mapStateToProps(state){
+  return {
+    User: state.User
+  }
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({signIn, signUp}, dispatch)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AuthForm)
 const styles = StyleSheet.create({
   errorContainer: {
     marginBottom: 10,

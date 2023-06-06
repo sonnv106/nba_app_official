@@ -15,7 +15,6 @@ const validationRules = (value, rules, formCopy) =>{
                 valid = valid && validateMaxLength(value, rules[rule])
                 break;
             case 'confirmPass': 
-                console.log('xxxxx', value, formCopy )
                 valid = valid && validateConfirmPass(value, formCopy[rules.confirmPass].value)
             default:
                 value = true
@@ -36,7 +35,7 @@ const validateEmail = email => {
     return expression.test(String(email).toLocaleLowerCase())
 }
 const validateMinLength = (value, ruleValue) => {
-    if(value >= ruleValue){
+    if(value.length >= ruleValue){
         return true
     }
     return false
