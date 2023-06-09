@@ -1,16 +1,33 @@
-import { View, Text, StyleSheet, ActivityIndicator, ScrollView} from 'react-native'
+import { View, StyleSheet, ActivityIndicator, ScrollView} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Logo from './authLogo'
 import AuthForm from './authForm';
-import { setTokens, getTokens } from '../utils/misc';
-const AuthComponent = ({props, navigation}: any) => {
-  const [loading, setLoading] = useState<boolean>(false)
+import { getTokens, setTokens } from '../utils/misc';
+import { connect, useSelector } from 'react-redux';
+import {autoSignIn} from '../../store/actions/user_actions';
+import { bindActionCreators } from 'redux';
+const AuthComponent = (props: any) => {
+  const [loading, setLoading] = useState<boolean>(true)
   const goNext = () => {
-    navigation.navigate('App')
+    props.navigation.navigate('App')
   }
   useEffect(()=> { 
-    getTokens(value => console.log(value));
-  }, [])
+    getTokens((value:any[]) => {
+      if(value[0][1] === null){
+        setLoading(false)
+      }else{
+        props.autoSignIn(value[1][1]).then(()=>{
+          if(!props.User?.auth?.token){
+            setLoading(false)
+          }else{
+            setTokens(props.User.auth, ()=>{
+              goNext()
+            })
+          }
+        })
+      }
+    });
+  }, [props.User?.auth?.token])
   if(loading){
     return(
       <View style={styles.loading}>
@@ -27,8 +44,15 @@ const AuthComponent = ({props, navigation}: any) => {
     </ScrollView>
   )
 }
-
-export default AuthComponent;
+const mapStateToProps = (state: any) =>{
+  return {
+    User: state.User
+  }
+}
+const mapDispatchToProps = (dispatch:any) =>{
+  return bindActionCreators({autoSignIn}, dispatch)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AuthComponent);
 const styles = StyleSheet.create({
   container: {
     flex: 1,

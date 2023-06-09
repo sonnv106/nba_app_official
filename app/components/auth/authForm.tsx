@@ -6,7 +6,7 @@ import validationRules from '../utils/forms/validationRules';
 import { connect } from 'react-redux';
 import {signIn, signUp} from '../../store/actions/user_actions';
 import { bindActionCreators } from 'redux';
-import { setTokens } from '../utils/misc';
+import { setTokens,} from '../utils/misc';
 interface Props {
     goNext: () => void;
 }
@@ -150,6 +150,9 @@ class AuthForm extends Component<Props, States> {
           autoCapitalize="none"
           keyboardType="email-address"
           onChangeText={value => this.updateInput('email', value)}
+          overrideTextStyle={{
+            color: '#FFFFFF'
+          }}
         />
         <Input
           placeholder="Enter password"
@@ -158,6 +161,9 @@ class AuthForm extends Component<Props, States> {
           value={this.state.form.password.value}
           onChangeText={value => this.updateInput('password', value)}
           secureTextEntry
+          overrideTextStyle={{
+            color: '#FFFFFF'
+          }}
         />
         {this.confirmPassword()}
         {this.formHasErrors()}

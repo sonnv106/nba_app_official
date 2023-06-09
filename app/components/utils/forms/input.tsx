@@ -1,15 +1,16 @@
-import {StyleSheet, Text, TextInput, TextInputProps, View, ViewProps} from 'react-native';
+import {StyleSheet, Text, TextInput, TextInputProps, TextStyle, View, ViewProps} from 'react-native';
 import React from 'react';
 interface Props extends TextInputProps{
   type ?: string;
-  overrideStyle?: ViewProps
+  overrideStyle?: ViewProps,
+  overrideTextStyle?: TextStyle
 }
 const input = (props :  Props) : TextInput | any => {
   let template = null;
   switch (props.type) {
     case 'textinput':
       template = <TextInput {...props}
-      style = {[styles.input, props.overrideStyle]}/>;
+      style = {[styles.input, props.overrideStyle, props.overrideTextStyle]}/>;
       break;
     default:
       return template;
