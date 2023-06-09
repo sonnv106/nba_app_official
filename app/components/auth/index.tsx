@@ -1,12 +1,16 @@
 import { View, Text, StyleSheet, ActivityIndicator, ScrollView} from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from './authLogo'
-import AuthForm from './authForm'
+import AuthForm from './authForm';
+import { setTokens, getTokens } from '../utils/misc';
 const AuthComponent = ({props, navigation}: any) => {
   const [loading, setLoading] = useState<boolean>(false)
   const goNext = () => {
     navigation.navigate('App')
   }
+  useEffect(()=> { 
+    getTokens(value => console.log(value));
+  }, [])
   if(loading){
     return(
       <View style={styles.loading}>

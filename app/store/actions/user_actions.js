@@ -21,10 +21,7 @@ const signIn = (data) => {
     })
     return {
         type: SIGN_IN,
-        payload: {
-            email: 'sonnguyen@gmail.com',
-            token: '123456'
-        }
+        payload: request
     }
 }
 const signUp = (data) =>{
