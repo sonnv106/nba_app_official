@@ -10,16 +10,26 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import NewsArticleComponent from './components/news/article';
 import GameArticleComponent from './components/games/article';
 import LogoTitle from './components/utils/logo';
+import Icon from 'react-native-vector-icons/Ionicons';
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 
 const AppStack = () => (
   <Tab.Navigator 
-  activeColor="#f0edf6"
-  inactiveColor="#3e2465"
-  barStyle={{ backgroundColor: '#694fad',paddingBottom: 0 }}>
-    <Tab.Screen component={News} name="News"/>
+  activeColor="#FFFFFF"
+  inactiveColor="#001338"
+  barStyle={{ backgroundColor: '#001338',paddingBottom: 0 }}
+  labeled = {false}
+  screenOptions={{
+  }}>
+    <Tab.Screen component={News} name="News" options={{
+      tabBarIcon: ({focused, color})=>{
+        return (
+          <Icon name='basketball-outline' size={25} />
+        )
+      },
+    }}/>
     <Tab.Screen component={Games} name="Games" />
   </Tab.Navigator>
 );
@@ -28,8 +38,9 @@ export default function () {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Auth"
-        screenOptions={{headerShown: true}}>
+        initialRouteName="Auth" screenOptions={{
+          headerShown: true
+        }}>
         <Stack.Screen component={AppStack} name="App" options={{
           headerTitle: LogoTitle,
           headerBackVisible: false,
@@ -37,10 +48,11 @@ export default function () {
             backgroundColor: '#001338',
           },
           headerTitleAlign: 'center',
-          headerTintColor: '#FFFFFF'
-        
+          headerTintColor: '#FFFFFF',
         }}/>
-        <Stack.Screen component={SignIn} name="Auth" />
+        <Stack.Screen component={SignIn} name="Auth" options={{
+          headerShown: false
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
