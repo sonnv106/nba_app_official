@@ -17,8 +17,8 @@ const Tab = createMaterialBottomTabNavigator();
 
 const AppStack = () => (
   <Tab.Navigator 
-  activeColor="#FFFFFF"
-  inactiveColor="#001338"
+  activeColor="#00194b"
+  inactiveColor='#FFFFFF'
   barStyle={{ backgroundColor: '#001338',paddingBottom: 0 }}
   labeled = {false}
   screenOptions={{
@@ -26,11 +26,17 @@ const AppStack = () => (
     <Tab.Screen component={News} name="News" options={{
       tabBarIcon: ({focused, color})=>{
         return (
-          <Icon name='basketball-outline' size={25} />
+          <Icon name='basketball-outline' size={25} color = {color}/>
         )
       },
     }}/>
-    <Tab.Screen component={Games} name="Games" />
+    <Tab.Screen component={Games} name="Games" options={{
+      tabBarIcon: ({focused, color})=>{
+        return (
+          <Icon name='tv-outline' size={25} color = {color} />
+        )
+      },
+    }}/>
   </Tab.Navigator>
 );
 
