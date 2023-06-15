@@ -58,7 +58,7 @@ export const autoSignIn = (refToken)=> {
 
         }
     }).then(response => {
-        console.log('auto sign in', response)
+        // console.log('auto sign in', response)
         return response.data
     }).catch(e => {
         return false

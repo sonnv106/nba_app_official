@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+export const FIREBASEREALTIMEURL = `https://rn-nba-app-4db5c-default-rtdb.asia-southeast1.firebasedatabase.app`
 export const FIREBASEURL = `https://rn-nba-app-4db5c.firebaseapp.com`;
 export const APIKEY = `AIzaSyAzdZ5HsJ0VF68tJhJP2UqBQcmW_IFS8Vs`;
 export const SIGNUP = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${APIKEY}`;
