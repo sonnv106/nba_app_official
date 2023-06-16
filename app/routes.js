@@ -59,6 +59,7 @@ export default function () {
         <Stack.Screen component={SignIn} name="Auth" options={{
           headerShown: false
         }} />
+        <Stack.Screen component={NewsArticleComponent} name='Article'/>
       </Stack.Navigator>
     </NavigationContainer>
   );
