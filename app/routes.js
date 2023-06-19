@@ -60,6 +60,7 @@ export default function () {
           headerShown: false
         }} />
         <Stack.Screen component={NewsArticleComponent} name='Article'/>
+        <Stack.Screen component={GameArticleComponent} name='Game'/>
       </Stack.Navigator>
     </NavigationContainer>
   );
