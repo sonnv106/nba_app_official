@@ -1,14 +1,26 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect, useDispatch, useSelector } from 'react-redux'
+import { getGames } from '../../store/actions/game_actions'
 
-const GamesComponent = () => {
-  return (
-    <View>
-      <Text>GamesComponent</Text>
-    </View>
-  )
+class GamesComponent extends React.Component{
+  componentDidMount(){
+    this.props.dispatch(getGames())
+  }
+  render(){
+    return (
+      <View>
+        <Text>GamesComponent</Text>
+      </View>
+    )  
+  }
 }
-
-export default GamesComponent
+const mapStateToProps = (state)=>{
+  console.log('state', state)
+  return {
+    Games: state.Games
+  }
+}
+export default connect(mapStateToProps)(GamesComponent)
 
 const styles = StyleSheet.create({})

@@ -26,6 +26,7 @@ class NewsComponent extends React.Component {
       ? news.articles.map((item, i) => (
           <TouchableOpacity key={i}
           onPress={()=>{
+            console.log(item)
             this.props.navigation.navigate('Article',{
               ...item
             })
