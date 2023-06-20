@@ -21,7 +21,7 @@ class GamesComponent extends React.Component {
       ? list.games.map((item, i) => (
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate('Game', {
+              this.props.navigation.navigate('GameArticle', {
                 ...item,
               });
             }}

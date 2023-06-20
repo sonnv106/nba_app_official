@@ -6,45 +6,51 @@ import { getTokens, setTokens } from '../utils/misc';
 import { connect, useSelector } from 'react-redux';
 import {autoSignIn} from '../../store/actions/user_actions';
 import { bindActionCreators } from 'redux';
-const AuthComponent = (props: any) => {
-  const [loading, setLoading] = useState<boolean>(true)
-  const goNext = () => {
-    props.navigation.navigate('App')
+import AsyncStorage from '@react-native-async-storage/async-storage';
+class AuthComponent extends React.Component{
+  // const [loading, setLoading] = useState<boolean>(true)
+  state = {
+    loading: true
   }
-  useEffect(()=> { 
+  componentDidMount(): void {
     getTokens((value:any[]) => {
       if(value[0][1] === null){
-        setLoading(false)
+        this.setState({loading: false})
       }else{
-        props.autoSignIn(value[1][1]).then(()=>{
-          if(!props.User?.auth?.token){
-            setLoading(false)
+        this.props.autoSignIn(value[1][1]).then(()=>{
+          if(!this.props.User?.auth?.token){
+            this.setState({loading: false})
           }else{
-            setTokens(props.User.auth, ()=>{
-              goNext()
+            setTokens(this.props.User.auth, ()=>{
+              this.goNext()
             })
           }
         })
       }
     });
-  }, [props.User?.auth?.token])
-  if(loading){
-    return(
-      <View style={styles.loading}>
-        <ActivityIndicator size={'small'}/>
-      </View>
+  }
+  render(): React.ReactNode {
+    if(this.state.loading){
+      return(
+        <View style={styles.loading}>
+          <ActivityIndicator size={'small'}/>
+        </View>
+      )
+    }
+    return (
+      <ScrollView style = {styles.container}>
+        <View>
+          <Logo/>
+          <AuthForm goNext={this.goNext}/>
+        </View>
+      </ScrollView>
     )
   }
-  return (
-    <ScrollView style = {styles.container}>
-      <View>
-        <Logo/>
-        <AuthForm goNext={goNext}/>
-      </View>
-    </ScrollView>
-  )
+  goNext = () => {
+    this.props.navigation.navigate('App')
+  }
 }
-const mapStateToProps = (state: any) =>{
+function mapStateToProps(state: any){
   return {
     User: state.User
   }
